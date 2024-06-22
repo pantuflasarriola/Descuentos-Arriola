@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARRIOLA - Códigos de Descuento</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #discountMessage h2 {
+            color: #4CAF50;
+            font-size: 24px;
+        }
+        #discountMessage p {
+            margin: 10px 0;
+        }
+        #discountMessage span {
+            color: red;
+            font-size: 24px;
+        }
+        #discountMessage strong {
+            font-size: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ARRIOLA - Códigos de Descuento</h1>
+        <form id="discountForm">
+            <label for="discountCode">Código de Descuento:</label>
+            <input type="text" id="discountCode" required>
+            <button type="submit">Aplicar Descuento</button>
+        </form>
+        <div id="discountMessage"></div>
+    </div>
+    <script>
+        let usedCodes = [];
+
+        document.getElementById('discountForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let discountCode = document.getElementById('discountCode').value.trim().toUpperCase();
+
+            // Verificar que el código ingresado sea válido
+            if (discountCode === 'PANTUFLASARRIOLA') {
+                let message = document.getElementById('discountMessage');
+                let currentDate = new Date().toLocaleDateString();
+                let randomCode = generateRandomCode();
+                usedCodes.push(randomCode);
+                message.innerHTML = `
+                    <h2>Felicidades!</h2>
+                    <p>Has obtenido un <span>10%</span> de descuento en tu próxima compra.</p>
+                    <p>Canjealo: <strong>${randomCode}</strong></p>
+                    <p>Toma captura para poder canjear tu descuento.</p>
+                    <p>Aplican restricciones. Promoción válida por un mes desde la fecha de ingreso (${currentDate}).</p>
+                `;
+            } else {
+                alert('El código ingresado no es válido.');
+            }
+        });
+
+        function generateRandomCode() {
+            // Generar un código aleatorio de la secuencia DESCAB100 que no haya sido usado antes
+            let availableCodes = [];
+            for (let i = 100; i <= 100000; i++) {
+                let code = `DESCAB${i}`;
+                if (!usedCodes.includes(code)) {
+                    availableCodes.push(code);
+                }
+            }
+            let index = Math.floor(Math.random() * availableCodes.length);
+            return availableCodes[index];
+        }
+    </script>
+</body>
+</html>
